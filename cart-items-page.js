@@ -1,5 +1,7 @@
 let cart = JSON.parse(localStorage.getItem("cart")) 
 cartNumber()
+increase(cart)
+decrease(cart)
 showcart()
 function showcart () {
     const cartproducts = document.querySelector(".cart-products")
@@ -21,17 +23,15 @@ function showcart () {
         <img src="./icons/remove.svg" alt="remove item" class="img-fluid">
     </span>
     <div class="item-options d-flex flex-nowrap">
-        <span class="decrease" role="button">-</span>
+        <span class="decrease" role="button" onclick="">-</span>
         <span class="quantity">${element.quantity}</span>
-        <span class="increase" role="button">+</span>
+        <span class="increase" role="button" onclick="increase(${element.quantity})">+</span>
     </div>
     </div>
 </div>
        `
     });
     removeItem()
-    increase()
-    decrease()
 }
 
 function removeCartItem (value) {
@@ -41,8 +41,8 @@ function removeCartItem (value) {
     localStorage.setItem("cart", JSON.stringify(cart))
     cartNumber()
     summation()
-    increase()
-    decrease()
+    increase(cart)
+    decrease(cart)
 }
 
 
@@ -52,8 +52,6 @@ function removeItem () {
 
         element.addEventListener("click", function (e) {
             e.target.closest(".item").remove()
-            increase()
-            decrease()
         })
     });
 }
@@ -73,40 +71,66 @@ function summation () {
     let numed = parseInt((element.price - (element.price*(element.sale_percentage / 100))).toFixed(0))
     grouped += numed * element.quantity   
     });
-    console.log(grouped)
-    // summed.textContent = grouped
+    summed.textContent = grouped
     finalPrice.textContent = (grouped + 30 + 15)
 }
 
 
-function decrease () {
-    const ItemQuantity = document.querySelectorAll(".quantity")
-    const minus = document.querySelectorAll(".decrease")
-    for (let i=0 ; i < cart.length; i++) {
-        minus[i].addEventListener("click", function () {
-            if (cart[i].quantity > 1) {
-                cart[i].quantity --;
-                ItemQuantity[i].textContent = cart[i].quantity
-            }
-        })
-    localStorage.setItem("cart", JSON.stringify(cart))
-    summation()
-}};
+// function decrease (mark) {
+//     const ItemQuantity = document.querySelectorAll(".quantity")
+//     const minus = document.querySelectorAll(".decrease")
+//     for (let i=0 ; i < cart.length; i++) {
+//         minus[i].addEventListener("click", function () {
+//             if (cart[i].quantity > 1) {
+//                 less = mark -1
+//                 console.log(mark)
+//                 ItemQuantity[i].textContent = mark
+//             }
+//         })
+//     localStorage.setItem("cart", JSON.stringify(cart))
+//     summation()
+// }};
 
-function increase () {
+// function increase (mark) {
+//     let ItemQuantity = document.querySelectorAll(".quantity")
+//     let plus = document.querySelectorAll(".increase")
+//     for (let i=0 ; i < cart.length; i++) {
+//         plus[i].addEventListener("click", function () {
+//                 more = mark +1
+//                 console.log(more)
+//                 ItemQuantity[i].textContent = more
+//         })
+//     localStorage.setItem("cart", JSON.stringify(cart))
+//     summation()
+// }};
+
+
+function increase (mark) {
     let ItemQuantity = document.querySelectorAll(".quantity")
     let plus = document.querySelectorAll(".increase")
-    for (let i=0 ; i < cart.length; i++) {
-        plus[i].addEventListener("click", function () {
-                cart[i].quantity ++;
-                ItemQuantity[i].textContent = cart[i].quantity
+    plus.forEach((element, i) => {
+        element.addEventListener("click", function () {
+            mark.quantity ++
+            console.log(plus)
+            console.log(ItemQuantity)
+            console.log(mark)
+            ItemQuantity[i].textContent = mark[i].quantity
+            summation()
         })
-    localStorage.setItem("cart", JSON.stringify(cart))
-    summation()
-}};
+    });
+}
 
-
-
+function decrease (mark) {
+    let ItemQuantity = document.querySelectorAll(".quantity")
+    let minus = document.querySelectorAll(".decrease")
+    minus.forEach((element, i) => {
+        element.addEventListener("click", function () {
+            mark[i].quantity -- 
+            ItemQuantity[i].textContent = mark[i].quantity
+            summation()
+        })
+    });
+}
 
 
 
