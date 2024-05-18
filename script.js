@@ -27,7 +27,7 @@ function showProducts(items) {
       <img src="${element.image}" alt="product image" />
     </div>
     <div class="product-info">
-    <a class="single-link" href="./singular?id=${element.id}">
+    <a class="single-link" href="singular.html?id=${element.id}">
       <h3 class="product-main">${element.title}</h3>
       </a>
       <p class="price">${(
@@ -52,7 +52,7 @@ function showProducts(items) {
       <img src="${element.image}" alt="product image" />
     </div>
     <div class="product-info">
-    <a class="single-link" href="/singular.html?id=${element.id}">
+    <a class="single-link" href="singular.html?id=${element.id}">
       <h3 class="product-main">${element.title}</h3>
       </a>
       <p class="price">${(
