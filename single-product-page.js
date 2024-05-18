@@ -4,7 +4,7 @@ function cartNumber() {
     cartCount.textContent = cart.length;
 }
 cartNumber();
-
+searchProducts()
 const getUrlParam = (param) => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -20,6 +20,7 @@ const getCurrentProduct = async (id) => {
 };
 
 const displayProduct = (product) => {
+    document.querySelector("title").textContent = product.title
     document.querySelector(".product-image").src = product.image;
     document.querySelector(".product-title").textContent = product.title;
     document.querySelector(".product-information").textContent = product.description;
@@ -43,28 +44,23 @@ const initProductPage = async () => {
 
 initProductPage();
 
-function searchProducts() {
-    const search = document.querySelector(".search-bar");
-    const productsList = document.querySelector(".products");
+function searchProducts () {
+    let search = document.querySelector(".search-bar")
     search.addEventListener("input", (e) => {
-        const value = e.target.value;
-        productsList.innerHTML = ``;
-        lookFor(value);
-    });
+        console.log(e.target.value)
+      const value = e.target.value
+      lookFor(value)
+    })
 }
 
-async function lookFor(item) {
-    await fetch(
-        `https://products-api-delta.vercel.app/api/products/search?q=${item}`
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            showProducts(data);
-            changeButtonToRemove();
-            changeButtonToAdd();
-            sessionStorage.setItem("results", JSON.stringify(data));
-            return data;
-        });
+async function lookFor (item) {
+    await fetch(`https://products-api-delta.vercel.app/api/products/search?q=${item}`)
+    .then(res => res.json())
+    .then(data => {
+      sessionStorage.setItem("results",JSON.stringify(data))
+      return data
+    }
+  )
 }
 
 function changeButtonToRemove(thing) {

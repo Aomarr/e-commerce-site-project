@@ -1,8 +1,10 @@
 let cart = JSON.parse(localStorage.getItem("cart")) 
 cartNumber()
-increase(cart)
+summation()
+increase()
 decrease(cart)
 showcart()
+searchProducts()
 function showcart () {
     const cartproducts = document.querySelector(".cart-products")
     cart.forEach((element) => {
@@ -39,10 +41,9 @@ function removeCartItem (value) {
     let place = cart.indexOf(match)
     cart.splice(place, 1)
     localStorage.setItem("cart", JSON.stringify(cart))
+    removeItem()
     cartNumber()
     summation()
-    increase(cart)
-    decrease(cart)
 }
 
 
@@ -66,57 +67,35 @@ cartCount.textContent = cart.length
 function summation () {
     const summed = document.querySelector(".cart-sum")
     const finalPrice = document.querySelector(".final-price")
+    const tax = document.querySelector(".tax-value")
+    const shipping = document.querySelector(".shipping-value")
     let grouped = 0
     cart.forEach(element => {
     let numed = parseInt((element.price - (element.price*(element.sale_percentage / 100))).toFixed(0))
     grouped += numed * element.quantity   
     });
-    summed.textContent = grouped
-    finalPrice.textContent = (grouped + 30 + 15)
+    summed.textContent = grouped 
+    if (grouped !== 0) {
+        tax.textContent = 30
+        shipping.textContent = 15
+    }
+    else {
+        tax.textContent = 0
+        shipping.textContent = 0
+    }
+    finalPrice.textContent = (grouped + parseInt(tax.textContent) + parseInt(shipping.textContent))
 }
 
 
-// function decrease (mark) {
-//     const ItemQuantity = document.querySelectorAll(".quantity")
-//     const minus = document.querySelectorAll(".decrease")
-//     for (let i=0 ; i < cart.length; i++) {
-//         minus[i].addEventListener("click", function () {
-//             if (cart[i].quantity > 1) {
-//                 less = mark -1
-//                 console.log(mark)
-//                 ItemQuantity[i].textContent = mark
-//             }
-//         })
-//     localStorage.setItem("cart", JSON.stringify(cart))
-//     summation()
-// }};
-
-// function increase (mark) {
-//     let ItemQuantity = document.querySelectorAll(".quantity")
-//     let plus = document.querySelectorAll(".increase")
-//     for (let i=0 ; i < cart.length; i++) {
-//         plus[i].addEventListener("click", function () {
-//                 more = mark +1
-//                 console.log(more)
-//                 ItemQuantity[i].textContent = more
-//         })
-//     localStorage.setItem("cart", JSON.stringify(cart))
-//     summation()
-// }};
 
 
-function increase (mark) {
+
+function increase () {
     let ItemQuantity = document.querySelectorAll(".quantity")
     let plus = document.querySelectorAll(".increase")
+    let cap = cart
     plus.forEach((element, i) => {
-        element.addEventListener("click", function () {
-            mark.quantity ++
-            console.log(plus)
-            console.log(ItemQuantity)
-            console.log(mark)
-            ItemQuantity[i].textContent = mark[i].quantity
-            summation()
-        })
+        element.addEventListener("click", runned(i))
     });
 }
 
@@ -132,29 +111,30 @@ function decrease (mark) {
     });
 }
 
-
+function runned (i) {
+    let cap = cart
+    cap[i].quantity ++
+    console.log(cap)
+    summation()
+    return
+}
 
 
 function searchProducts () {
     let search = document.querySelector(".search-bar")
-    let productsList = document.querySelector(".products")
-    stopReload()
+    const searchParam = document.querySelector("form")
     search.addEventListener("input", (e) => {
       const value = e.target.value
-      productsList.innerHTML = ``
       lookFor(value)
-  })
-  }
-  
-  async function lookFor (item) {
+    })
+}
+ 
+async function lookFor (item) {
     await fetch(`https://products-api-delta.vercel.app/api/products/search?q=${item}`)
     .then(res => res.json())
     .then(data => {
-      showProducts(data)
-      changeButtonToRemove()
-      changeButtonToAdd()
       sessionStorage.setItem("results",JSON.stringify(data))
       return data
     }
   )
-  }
+}

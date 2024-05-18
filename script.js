@@ -1,12 +1,14 @@
 let products = [];
 let cart = JSON.parse(localStorage.getItem("cart")) || []
+let searchRedirect = sessionStorage.getItem("results")
+let allResults = JSON.parse(searchRedirect)
 getProducts();
 
 function getProducts() {
   fetch("https://products-api-delta.vercel.app/api/products")
     .then((data) => data.json())
     .then((data) => {
-      showProducts(data);
+      showProducts(allResults || data)
       products = data;
       cartNumber()
       changeButtonToRemove()
@@ -70,6 +72,7 @@ function showProducts(items) {
   </div>
     `;
   }});
+  sessionStorage.clear()
 }
 
 function addToCart(index) {
