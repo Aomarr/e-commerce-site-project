@@ -283,7 +283,7 @@ footer li {
 
 .cart-products {
     max-height: 320px;
-    overflow-y: scroll;
+    overflow-y: auto;
     scroll-behavior: auto;
 }
 
@@ -292,7 +292,10 @@ footer li {
 .item   {
     max-height: 122px;
     min-height: 104px;
-    border-bottom: 1px solid #343A401F;
+}
+
+.cart-products > .item + .item {
+    border-top: 1px solid #343A401F;
 }
 
 .item-name {
@@ -310,6 +313,10 @@ footer li {
 .decrease, .quantity, .increase {
     font-size: 16px;
     padding: 8px 16px;
+}
+
+.decrease, .increase {
+    user-select: none;
 }
 .quantity {
     border: 1px solid #D9D9D9;

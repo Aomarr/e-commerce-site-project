@@ -90,12 +90,9 @@ function summation () {
 function increase () {
     let ItemQuantity = document.querySelectorAll(".quantity")
     let plus = document.querySelectorAll(".increase")
-    let cap = cart
     plus.forEach((element, i) => {
         element.addEventListener("click", function () {
-            let matched = cart.find((e => e == cap[i]))
-            let index = cart.indexOf(matched)
-            cart[index].quantity ++
+            cart[i].quantity ++
             ItemQuantity[i].textContent = cart[i].quantity
             summation()
             localStorage.setItem("cart", JSON.stringify(cart))
@@ -106,16 +103,13 @@ function increase () {
 function decrease () {
     let ItemQuantity = document.querySelectorAll(".quantity")
     let minus = document.querySelectorAll(".decrease")
-    let cap = cart
     minus.forEach((element, i) => {
         element.addEventListener("click", function () {
-            let matched = cart.find((e => e == cap[i]))
-            let index = cart.indexOf(matched)
-            if (cart[index].quantity > 1) {
-            cart[index].quantity --
-            ItemQuantity[i].textContent = cart[i].quantity
-            summation()
-            localStorage.setItem("cart", JSON.stringify(cart))
+            if (cart[i].quantity > 1) {
+                cart[i].quantity --
+                ItemQuantity[i].textContent = cart[i].quantity
+                summation()
+                localStorage.setItem("cart", JSON.stringify(cart))
             }
         })
     });
