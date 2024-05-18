@@ -24,7 +24,7 @@ function showProducts(items) {
     const object = cart.find((e) => e.id == element.id)
     if (object != undefined) {
       productsList.innerHTML += `
-    <div class="product-card d-flex flex-column justify-content-between" onload="checker()">
+    <div class="product-card d-flex flex-column justify-content-between">
     <div class="image">
       <img src="${element.image}" alt="product image" />
     </div>
@@ -49,7 +49,7 @@ function showProducts(items) {
     }
     else {
     productsList.innerHTML += `
-    <div class="product-card d-flex flex-column justify-content-between" onload="checker()">
+    <div class="product-card d-flex flex-column justify-content-between">
     <div class="image">
       <img src="${element.image}" alt="product image" />
     </div>
@@ -135,7 +135,6 @@ function adjustedButtons () {
 function searchProducts () {
   const search = document.querySelector(".search-bar")
   const productsList = document.querySelector(".products")
-  stopReload()
   search.addEventListener("input", (e) => {
     const value = e.target.value
     productsList.innerHTML = ``
@@ -156,16 +155,3 @@ async function lookFor (item) {
 )
 }
 
-function stopReload () {
-  let form = document.querySelector("form")
-  form.addEventListener("submit", (e) => e.preventDefault())
-}
-
-// function searchFull () {
-//   const search = document.querySelector(".search-bar")
-//   search.addEventListener("submit", (e) => {
-//     const value = e.target.value
-//     let results = lookFor(value)
-//     console.log(results)
-//     sessionStorage.setItem("resuts", JSON.stringify(results));})
-// }

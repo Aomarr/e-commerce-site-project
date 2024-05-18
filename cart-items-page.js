@@ -1,12 +1,11 @@
 let cart = JSON.parse(localStorage.getItem("cart")) 
 cartNumber()
 summation()
-increase()
-decrease(cart)
 showcart()
 searchProducts()
 function showcart () {
     const cartproducts = document.querySelector(".cart-products")
+    cartproducts.innerHTML = ``
     cart.forEach((element) => {
        cartproducts.innerHTML += `
 <div class="item d-flex py-3 gap-2 gap-md-3">
@@ -25,15 +24,17 @@ function showcart () {
         <img src="./icons/remove.svg" alt="remove item" class="img-fluid">
     </span>
     <div class="item-options d-flex flex-nowrap">
-        <span class="decrease" role="button" onclick="">-</span>
+        <span class="decrease" role="button">-</span>
         <span class="quantity">${element.quantity}</span>
-        <span class="increase" role="button" onclick="increase(${element.quantity})">+</span>
+        <span class="increase" role="button">+</span>
     </div>
     </div>
 </div>
        `
     });
     removeItem()
+    increase(cart)
+    decrease(cart)
 }
 
 function removeCartItem (value) {
@@ -50,9 +51,9 @@ function removeCartItem (value) {
 function removeItem () {
     const remove = document.querySelectorAll(".delete")
     remove.forEach(element => {
-
         element.addEventListener("click", function (e) {
             e.target.closest(".item").remove()
+            showcart()
         })
     });
 }
@@ -86,39 +87,40 @@ function summation () {
     finalPrice.textContent = (grouped + parseInt(tax.textContent) + parseInt(shipping.textContent))
 }
 
-
-
-
-
 function increase () {
     let ItemQuantity = document.querySelectorAll(".quantity")
     let plus = document.querySelectorAll(".increase")
     let cap = cart
     plus.forEach((element, i) => {
-        element.addEventListener("click", runned(i))
-    });
-}
-
-function decrease (mark) {
-    let ItemQuantity = document.querySelectorAll(".quantity")
-    let minus = document.querySelectorAll(".decrease")
-    minus.forEach((element, i) => {
         element.addEventListener("click", function () {
-            mark[i].quantity -- 
-            ItemQuantity[i].textContent = mark[i].quantity
+            let matched = cart.find((e => e == cap[i]))
+            let index = cart.indexOf(matched)
+            cart[index].quantity ++
+            ItemQuantity[i].textContent = cart[i].quantity
             summation()
+            localStorage.setItem("cart", JSON.stringify(cart))
         })
     });
 }
 
-function runned (i) {
+function decrease () {
+    let ItemQuantity = document.querySelectorAll(".quantity")
+    let minus = document.querySelectorAll(".decrease")
     let cap = cart
-    cap[i].quantity ++
-    console.log(cap)
-    summation()
-    return
-}
+    minus.forEach((element, i) => {
+        element.addEventListener("click", function () {
+            let matched = cart.find((e => e == cap[i]))
+            let index = cart.indexOf(matched)
+            if (cart[index].quantity > 1) {
+            cart[index].quantity --
+            ItemQuantity[i].textContent = cart[i].quantity
+            summation()
+            localStorage.setItem("cart", JSON.stringify(cart))
+            }
+        })
+    });
 
+}
 
 function searchProducts () {
     let search = document.querySelector(".search-bar")

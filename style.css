@@ -292,7 +292,7 @@ footer li {
 .item   {
     max-height: 122px;
     min-height: 104px;
-    border-top: 1px solid #6C6C6C;
+    border-bottom: 1px solid #343A401F;
 }
 
 .item-name {
