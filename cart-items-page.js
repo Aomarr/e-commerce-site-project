@@ -13,7 +13,7 @@ function showcart () {
     <img src="${element.image}" alt="product image">
     </div>
     <div class="item-info d-flex flex-column justify-content-between">
-    <h3 class="item-name fs-6 fs-md-4">${element.title}</h3>
+    <h3 class="item-name fs-6 fs-md-4"><a class="single-link" href="singular.html?id=${element.id}">${element.title}</a></h3>
     <p class="p-0 m-0 priced"><span class="item-price">${(
         element.price -
         element.price * (element.sale_percentage / 100)

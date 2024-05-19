@@ -134,10 +134,8 @@ function adjustedButtons () {
 
 function searchProducts () {
   const search = document.querySelector(".search-bar")
-  const productsList = document.querySelector(".products")
   search.addEventListener("input", (e) => {
     const value = e.target.value
-    productsList.innerHTML = ``
     lookFor(value)
 })
 }
@@ -146,6 +144,7 @@ async function lookFor (item) {
   await fetch(`https://products-api-delta.vercel.app/api/products/search?q=${item}`)
   .then(res => res.json())
   .then(data => {
+    cleared()
     showProducts(data)
     changeButtonToRemove()
     changeButtonToAdd()
@@ -155,3 +154,7 @@ async function lookFor (item) {
 )
 }
 
+function cleared () {
+  const productsList = document.querySelector(".products")
+  productsList.innerHTML = ``
+}

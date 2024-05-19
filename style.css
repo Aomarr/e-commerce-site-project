@@ -287,7 +287,23 @@ footer li {
     scroll-behavior: auto;
 }
 
+.cart-products::-webkit-scrollbar {
+    width: 10px;
+}
 
+.cart-products::-webkit-scrollbar-track {
+    background-color: #343A401F;
+    border-radius: 3px;
+}
+
+.cart-products::-webkit-scrollbar-thumb {
+    background-color: #343A40CC;
+    border-radius: 3px;
+}
+
+.cart-products::-webkit-scrollbar-thumb:hover {
+    background-color: #343A40;
+}
 
 .item   {
     max-height: 122px;
