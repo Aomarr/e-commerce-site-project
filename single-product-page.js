@@ -29,6 +29,7 @@ const displayProduct = (product) => {
     checkProduct(product)
     changeButtonToRemove(product);
     changeButtonToAdd(product);
+    hideSpinner()
 };
 
 const initProductPage = async () => {
@@ -103,4 +104,9 @@ function checkProduct(item) {
         blue.style.display = "none"
         red.style.display = "inline-block"
     }
+}
+
+function hideSpinner () {
+    const spinner = document.querySelector(".spin-contain")
+    spinner.style.display = "none"
 }

@@ -73,6 +73,7 @@ function showProducts(items) {
     `;
   }});
   sessionStorage.clear()
+  hideSpinner()
 }
 
 function addToCart(index) {
@@ -157,4 +158,9 @@ async function lookFor (item) {
 function cleared () {
   const productsList = document.querySelector(".products")
   productsList.innerHTML = ``
+}
+
+function hideSpinner () {
+  const spinner = document.querySelector(".spin-contain")
+  spinner.style.display = "none"
 }
